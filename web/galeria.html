@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria Dragon Ball</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            font-family: 'Arial Black', sans-serif;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .top-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #FF6B00, #FF8C00);
+            color: white;
+            border: 4px solid #000;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #CC5500, 0 10px 20px rgba(0,0,0,0.3);
+            transition: all 0.1s;
+            z-index: 100;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .top-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #CC5500, 0 12px 25px rgba(0,0,0,0.4);
+        }
+
+        .top-button:active {
+            transform: translateY(3px);
+            box-shadow: 0 3px 0 #CC5500, 0 5px 10px rgba(0,0,0,0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-top: 40px;
+        }
+
+        h1 {
+            font-size: 64px;
+            color: #FFD700;
+            text-shadow: 
+                4px 4px 0 #FF6B00,
+                -2px -2px 0 #000,
+                2px -2px 0 #000,
+                -2px 2px 0 #000,
+                2px 2px 0 #000;
+            margin-bottom: 10px;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 
+                4px 4px 0 #FF6B00,
+                -2px -2px 0 #000,
+                2px -2px 0 #000,
+                -2px 2px 0 #000,
+                2px 2px 0 #000,
+                0 0 20px #FFD700;
+            }
+            to { text-shadow: 
+                4px 4px 0 #FF6B00,
+                -2px -2px 0 #000,
+                2px -2px 0 #000,
+                -2px 2px 0 #000,
+                2px 2px 0 #000,
+                0 0 40px #FFD700,
+                0 0 60px #FF6B00;
+            }
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #2a2a3e, #1f1f2e);
+            border: 4px solid #FFD700;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,215,0,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(255,215,0,0.4);
+            border-color: #FF6B00;
+        }
+
+        .character-icon {
+            font-size: 120px;
+            margin: 20px 0;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .card:nth-child(1) .character-icon { animation-delay: 0s; }
+        .card:nth-child(2) .character-icon { animation-delay: 0.3s; }
+        .card:nth-child(3) .character-icon { animation-delay: 0.6s; }
+        .card:nth-child(4) .character-icon { animation-delay: 0.9s; }
+        .card:nth-child(5) .character-icon { animation-delay: 1.2s; }
+        .card:nth-child(6) .character-icon { animation-delay: 1.5s; }
+
+        .card-title {
+            font-size: 28px;
+            color: #FFD700;
+            margin: 15px 0 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .card-description {
+            font-size: 16px;
+            color: #ccc;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .power-level {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #FF6B00, #FF8C00);
+            border: 3px solid #000;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 4px 0 #CC5500;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, #2a2a3e, #1f1f2e);
+            border: 5px solid #FFD700;
+            border-radius: 25px;
+            padding: 40px;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            animation: modalAppear 0.3s ease;
+        }
+
+        @keyframes modalAppear {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 32px;
+            color: #FFD700;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,107,0,0.2);
+            border: 2px solid #FFD700;
+            transition: all 0.3s;
+        }
+
+        .close-modal:hover {
+            background: #FF6B00;
+            transform: rotate(90deg);
+        }
+
+        .modal-icon {
+            font-size: 150px;
+            margin: 20px 0;
+        }
+
+        .modal-title {
+            font-size: 36px;
+            color: #FFD700;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+        }
+
+        .modal-text {
+            font-size: 18px;
+            color: #fff;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .modal-power {
+            font-size: 24px;
+            color: #FF6B00;
+            font-weight: bold;
+            margin-top: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <a href="#" class="top-button" onclick="alert('Voltar para a página do Kamehameha!\nAltere o href para \'index.html\' ou o nome do seu arquivo anterior'); return false;">⬅ VOLTAR</a>
+
+    <header>
+        <h1>🐉 GALERIA Z 🐉</h1>
+        <p class="subtitle">Conheça os Guerreiros Lendários</p>
+    </header>
+
+    <div class="gallery">
+        <div class="card" onclick="openModal('goku')">
+            <div class="character-icon">🥋</div>
+            <h2 class="card-title">Goku</h2>
+            <p class="card-description">O Saiyajin mais poderoso do universo</p>
+            <span class="power-level">⚡ Nível: OVER 9000!</span>
+        </div>
+
+        <div class="card" onclick="openModal('vegeta')">
+            <div class="character-icon">👊</div>
+            <h2 class="card-title">Vegeta</h2>
+            <p class="card-description">Príncipe dos Saiyajins</p>
+            <span class="power-level">⚡ Nível: 8500</span>
+        </div>
+
+        <div class="card" onclick="openModal('gohan')">
+            <div class="character-icon">📚</div>
+            <h2 class="card-title">Gohan</h2>
+            <p class="card-description">Guerreiro acadêmico místico</p>
+            <span class="power-level">⚡ Nível: 7800</span>
+        </div>
+
+        <div class="card" onclick="openModal('piccolo')">
+            <div class="character-icon">🟢</div>
+            <h2 class="card-title">Piccolo</h2>
+            <p class="card-description">O Namekuseijin estrategista</p>
+            <span class="power-level">⚡ Nível: 6500</span>
+        </div>
+
+        <div class="card" onclick="openModal('krillin')">
+            <div class="character-icon">⚪</div>
+            <h2 class="card-title">Kuririn</h2>
+            <p class="card-description">O humano mais forte da Terra</p>
+            <span class="power-level">⚡ Nível: 5200</span>
+        </div>
+
+        <div class="card" onclick="openModal('trunks')">
+            <div class="character-icon">⚔️</div>
+            <h2 class="card-title">Trunks</h2>
+            <p class="card-description">O guerreiro do futuro</p>
+            <span class="power-level">⚡ Nível: 7200</span>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">×</span>
+            <div class="modal-icon" id="modalIcon"></div>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <p class="modal-text" id="modalText"></p>
+            <p class="modal-power" id="modalPower"></p>
+        </div>
+    </div>
+
+    <script>
+        // Create stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        const characters = {
+            goku: {
+                icon: '🥋',
+                title: 'Son Goku',
+                text: 'Criado na Terra após ser enviado do Planeta Vegeta, Goku se tornou o protetor mais poderoso do universo. Mestre em artes marciais e possuidor de transformações incríveis como Super Saiyajin, Ultra Instinto e muito mais!',
+                power: '💪 Técnica Especial: Kamehameha, Genki Dama'
+            },
+            vegeta: {
+                icon: '👊',
+                title: 'Vegeta',
+                text: 'O orgulhoso Príncipe dos Saiyajins. Inicialmente um vilão, tornou-se um dos maiores heróis da Terra. Sua determinação e orgulho o impulsionam a sempre buscar superar Goku e proteger sua família.',
+                power: '💪 Técnica Especial: Final Flash, Big Bang Attack'
+            },
+            gohan: {
+                icon: '📚',
+                title: 'Son Gohan',
+                text: 'Filho mais velho de Goku, Gohan possui um potencial incrível. Equilibra sua vida entre ser um acadêmico brilhante e um guerreiro poderoso. Sua forma Místico Gohan é uma das mais fortes do universo.',
+                power: '💪 Técnica Especial: Masenko, Kamehameha Supremo'
+            },
+            piccolo: {
+                icon: '🟢',
+                title: 'Piccolo',
+                text: 'Namekuseijin sábio e poderoso, foi mentor de Gohan e se tornou um membro fundamental da equipe. Sua inteligência tática e habilidades regenerativas o tornam um guerreiro único.',
+                power: '💪 Técnica Especial: Makankosappo, Regeneração'
+            },
+            krillin: {
+                icon: '⚪',
+                title: 'Kuririn',
+                text: 'O melhor amigo de Goku desde a infância e o humano mais forte da Terra. Apesar de não ter poderes alienígenas, sua coragem e habilidade são inspiradoras. Casado com a Androide 18.',
+                power: '💪 Técnica Especial: Kienzan, Kamehameha'
+            },
+            trunks: {
+                icon: '⚔️',
+                title: 'Trunks',
+                text: 'Filho de Vegeta e Bulma, veio do futuro para salvar o passado. Empunha sua espada lendária e possui a determinação dos Saiyajins. Possui formas como Super Saiyajin Rage.',
+                power: '💪 Técnica Especial: Burning Attack, Final Hope Slash'
+            }
+        };
+
+        function openModal(character) {
+            const data = characters[character];
+            document.getElementById('modalIcon').textContent = data.icon;
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalText').textContent = data.text;
+            document.getElementById('modalPower').textContent = data.power;
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
