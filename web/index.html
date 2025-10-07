@@ -22,6 +22,35 @@
             overflow: hidden;
         }
 
+        .top-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #6B00FF, #8C00FF);
+            color: white;
+            border: 4px solid #000;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #4B00CC, 0 10px 20px rgba(0,0,0,0.3);
+            transition: all 0.1s;
+            z-index: 100;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .top-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #4B00CC, 0 12px 25px rgba(0,0,0,0.4);
+        }
+
+        .top-button:active {
+            transform: translateY(3px);
+            box-shadow: 0 3px 0 #4B00CC, 0 5px 10px rgba(0,0,0,0.3);
+        }
+
         .container {
             position: relative;
             width: 100%;
@@ -349,6 +378,8 @@
     </style>
 </head>
 <body>
+    <a href="#" class="top-button" onclick="alert('Aqui você pode colocar o link para outra página!\nExemplo: href=\'outra-pagina.html\''); return false;">🌟 GALERIA</a>
+
     <div class="container">
         <div class="goku" id="goku">
             <div class="body">
